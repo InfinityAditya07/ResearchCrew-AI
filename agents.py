@@ -3,8 +3,11 @@ import os
 from crewai import Agent, Crew, LLM, Process, Task
 from dotenv import load_dotenv
 
+from litellm_patch import apply_litellm_patch
+
 
 load_dotenv()
+apply_litellm_patch()
 
 
 def get_groq_api_key() -> str:
