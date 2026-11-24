@@ -7,6 +7,7 @@ from litellm_patch import apply_litellm_patch
 
 
 DEFAULT_GROQ_MODEL = "groq/openai/gpt-oss-120b"
+RETIRED_GROQ_MODELS = frozenset({"groq/llama-3.3-70b-versatile"})
 
 load_dotenv()
 apply_litellm_patch()
@@ -17,8 +18,11 @@ def get_groq_api_key() -> str:
 
 
 def get_groq_model() -> str:
-    """Return a current Groq model identifier in LiteLLM's provider/model format."""
-    return os.getenv("GROQ_MODEL", DEFAULT_GROQ_MODEL)
+    """Return a supported Groq model identifier in LiteLLM's provider/model format."""
+    configured_model = os.getenv("GROQ_MODEL", DEFAULT_GROQ_MODEL)
+    if configured_model in RETIRED_GROQ_MODELS:
+        return DEFAULT_GROQ_MODEL
+    return configured_model
 
 
 groq_llm = LLM(
