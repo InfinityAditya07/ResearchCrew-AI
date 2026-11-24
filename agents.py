@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from litellm_patch import apply_litellm_patch
 
 
+DEFAULT_GROQ_MODEL = "groq/openai/gpt-oss-120b"
+
 load_dotenv()
 apply_litellm_patch()
 
@@ -15,8 +17,8 @@ def get_groq_api_key() -> str:
 
 
 def get_groq_model() -> str:
-    # Allow easy model swaps when Groq deprecates models.
-    return os.getenv("GROQ_MODEL", "groq/llama-3.3-70b-versatile")
+    """Return a current Groq model identifier in LiteLLM's provider/model format."""
+    return os.getenv("GROQ_MODEL", DEFAULT_GROQ_MODEL)
 
 
 groq_llm = LLM(
@@ -94,4 +96,3 @@ def run_crew(topic: str) -> str:
 
     result = crew.kickoff(inputs={"topic": topic})
     return str(result)
-
