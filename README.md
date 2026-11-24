@@ -37,10 +37,10 @@ pip install -r requirements.txt
 GROQ_API_KEY=your_key_here
 ```
 
-Optional: choose a Groq model (defaults to `groq/llama-3.3-70b-versatile`):
+Optional: choose a Groq model. The current default is `groq/openai/gpt-oss-120b`.
 
 ```bash
-GROQ_MODEL=groq/llama-3.3-70b-versatile
+GROQ_MODEL=groq/openai/gpt-oss-120b
 ```
 
 4. Start the Streamlit app:
@@ -60,4 +60,3 @@ This project uses CrewAI’s **sequential** process:
   - `analysis_task` runs next and receives `research_task` output as context.
   - `report_task` runs last and receives `analysis_task` output as context.
 - The final return value is the **report writer**’s output (the final report displayed in the UI).
-
